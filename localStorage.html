@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        Hey, there my name is
+        <span id="userstoredname">
+        </span>
+        :)
+    </div>
+    <br>
+
+    <input id="user-name" type="text" placeholder="Enter Your Name ">
+    <button id="click-button">Click</button>
+    <script>
+        const button = document.getElementById("click-button");
+        const uname = document.getElementById("user-name");
+        const userstoredname = document.getElementById("userstoredname");
+        button.addEventListener("click", () => {
+            const value = uname.value;
+            localStorage.setItem('name', value);
+            location.reload();
+          //  userstoredname.innerText = value;
+        })
+        window.addEventListener('load', () => {
+            const value = localStorage.getItem('name');
+            userstoredname.innerText = value;
+        }
+        )
+    </script>
+</body>
+
+</html>
