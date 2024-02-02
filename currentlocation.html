@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Get UsersCurrent Location</h1>
+
+    <button id="get-location-button">
+        Get Location
+    </button>
+    <h3>Show Location</h3>
+    <h4 id="country-name"></h4>
+    <h5 id="city-name"></h5>
+    <h6 id="city-region"></h6>
+    <script>
+        const button = document.getElementById("get-location-button");
+        const countryName = document.getElementById("country-name");
+        const cityName = document.getElementById("city-name");
+        const cityRegion = document.getElementById("city-region");
+
+        async function getData(lat, long) {
+            const promise = await fetch(`http://api.weatherapi.com/v1/current.json?key=525ef0d314af4c19afc151650240202&q=${lat},${long}&aqi=yes`
+            );
+            return await promise.json()
+        }
+
+        async function gotLocation(position) {
+            const result = await getData(position.coords.latitude, position.coords.longitude);
+            console.log(result);
+            countryName.innerText = result.location.country;
+            cityName.innerText = result.location.name;
+            cityRegion.innerText = result.location.region;
+            // console.log(position);
+        }
+
+        function failToGetLocation() {
+            console.log("There was some issue ");
+        }
+
+        button.addEventListener('click', async () => {
+            navigator.geolocation.getCurrentPosition(gotLocation, failToGetLocation)
+        })
+    </script>
+</body>
+
+</html>
